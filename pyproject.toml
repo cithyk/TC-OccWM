@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nuscenes-robust-world-critic"
+version = "0.1.0"
+description = "Symbolic BEV world model critic for risk-aware autonomous driving on nuScenes."
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.24",
+  "torch>=2.1",
+  "typing-extensions>=4.8",
+  "pyyaml>=6.0",
+  "tqdm>=4.66",
+  "matplotlib>=3.7",
+  "imageio>=2.31",
+]
+
+[project.optional-dependencies]
+nuscenes = [
+  "nuscenes-devkit>=1.1.11",
+  "pyquaternion>=0.9.9",
+  "opencv-python>=4.8",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]

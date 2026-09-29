@@ -1,0 +1,78 @@
+seed: 7
+
+data:
+  # Set these paths on the machine that stores nuScenes and the generated cache.
+  nuscenes_root: "/path/to/nuScenes"
+  cache_root: "/path/to/nuScenes_cache"
+  version: "v1.0-trainval"
+  train_split: "train"
+  val_split: "val"
+  num_workers: 4
+  synthetic_size: 512
+  agent_category_prefixes:
+    - vehicle.
+    - human.pedestrian.
+
+bev:
+  x_min: -20.0
+  x_max: 80.0
+  y_min: -40.0
+  y_max: 40.0
+  resolution: 1.0
+  channels:
+    - drivable
+    - lane
+    - route
+    - agents
+    - ego
+
+model:
+  latent_dim: 96
+  hidden_dim: 128
+  proposal_latent_dim: 32
+  perturb_dim: 8
+  trajectory_dim: 4
+  occupancy_channels: 3
+  risk_names:
+    - collision
+    - offroad
+    - redlight
+  risk_weights:
+    collision: 8.0
+    offroad: 5.0
+    redlight: 3.0
+    uncertainty: 1.0
+    progress: 1.0
+    comfort: 0.2
+
+planning:
+  horizon_steps: 12
+  dt: 0.5
+  num_candidates: 32
+  max_speed_mps: 18.0
+  max_abs_y: 38.0
+  max_x: 80.0
+  min_x: -10.0
+
+training:
+  batch_size: 8
+  effective_batch_size: 32
+  epochs: 20
+  lr: 0.0003
+  weight_decay: 0.01
+  amp: true
+  grad_clip_norm: 1.0
+  negative_ratio: 0.5
+  clean_ratio: 0.7
+  output_dir: "outputs"
+
+perturbations:
+  enabled: true
+  max_delay_steps: 2
+  bev_dropout_prob: 0.1
+  agent_dropout_prob: 0.15
+  ego_noise_std:
+    x: 0.15
+    y: 0.15
+    yaw: 0.02
+    speed: 0.2
